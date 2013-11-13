@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Data Protection</string>
+	<key>prefix</key>
+	<string>dp</string>
+	<key>readonly</key>
+	<true/>
+	<key>metrics</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>calendar</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can access calendar/reminders, 0 otherwise.</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>micro</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can access the microphone, 0 otherwise.</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>media</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can access the camera/library, 0 otherwise.</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>contacts</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can access the contacts list, 0 otherwise.</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>location</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can get the device&apos;s location, 0 otherwise.</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>social</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can access Twitter or Facebook data, 0 otherwise.</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>network</string>
+			<key>description</key>
+			<string>Set to 1 whether the app can make network connections, 0 otherwise.</string>
+		</dict>
+	</array>
+</dict>
+</plist>
