@@ -72,14 +72,16 @@
             NSInteger social = 0;
             NSInteger network = 0;
             
-            NSString *escAppName = [theItem.name stringByReplacingOccurrencesOfString:@"'"
+            NSString *escAppName = [theItem.bundleName stringByReplacingOccurrencesOfString:@"'"
                                                                            withString:@"'\\''"];
-            NSString *decrypted = [NSString stringWithFormat:@"%@/%@/%@.decrypted", itemPath, escAppName, [escAppName stringByDeletingPathExtension]];
-            NSArray *args = [NSArray arrayWithObjects: @"-ov", decrypted, nil];
+            NSString *escExeName = [theItem.executableName stringByReplacingOccurrencesOfString:@"'"
+                                                                           withString:@"'\\''"];
+            NSString *decrypted = [NSString stringWithFormat:@"%@/%@/%@.decrypted", itemPath, escAppName, escExeName];
+            NSArray *args = [NSArray arrayWithObjects: decrypted, nil];
             NSTask *dump = [[NSTask alloc] init];
             NSPipe *output = [NSPipe pipe];
             [dump setStandardOutput:output];
-            [dump setLaunchPath:@"/usr/bin/otool"];
+            [dump setLaunchPath:@"/usr/bin/strings"];
             [dump setArguments:args];
             [dump launch];
             
@@ -88,24 +90,68 @@
             
             if(read != nil)
             {
-                if ([read rangeOfString:@"EKEventStore"].location != NSNotFound)
+                // Calendar:
+                if ([read rangeOfString:@"EKEvent"].location != NSNotFound)
                     calendar = 1;
+                
+                // Microphone:
                 if ([read rangeOfString:@"requestRecordPermission"].location != NSNotFound)
+                {
                     micro = 1;
+                }
+                    
+                // Media:
                 if ([read rangeOfString:@"UIImagePickerController"].location != NSNotFound)
+                {
                     media = 1;
-                if ([read rangeOfString:@"AVCapture"].location != NSNotFound)
-                    media = 1;
-                if ([read rangeOfString:@"ABAddressBookRef"].location != NSNotFound)
+                }
+                else
+                {
+                    if ([read rangeOfString:@"AVCapture"].location != NSNotFound)
+                        media = 1;
+                }
+                
+                // Contacts:
+                if ([read rangeOfString:@"ABPeople"].location != NSNotFound)
+                {
                     contacts = 1;
+                }
+                else
+                {
+                    if ([read rangeOfString:@"ABAddressBook"].location != NSNotFound)
+                        contacts = 1;
+                }
+                // Location:
                 if ([read rangeOfString:@"CLLocationManager"].location != NSNotFound)
                     location = 1;
+                
+                // Social:
                 if ([read rangeOfString:@"ACAccountStore"].location != NSNotFound)
                     social = 1;
-                if ([read rangeOfString:@"NSURL"].location != NSNotFound)
+                
+                // Network:
+                if ([read rangeOfString:@"NSURLRequest"].location != NSNotFound){
                     network = 1;
-                if ([read rangeOfString:@"CFSocket"].location != NSNotFound)
-                    network = 1;
+                }
+                else
+                {
+                    if ([read rangeOfString:@"NSURLConnection"].location != NSNotFound)
+                    {
+                        network = 1;
+                    }
+                    else
+                    {
+                        if ([read rangeOfString:@"CFSocket"].location != NSNotFound)
+                        {
+                            network = 1;
+                        }
+                        else
+                        {
+                            if ([read rangeOfString:@"CFStream"].location != NSNotFound)
+                                network = 1;
+                        }
+                    }
+                }
                 
                 [read release];
             }

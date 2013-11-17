@@ -20,7 +20,7 @@
 			<key>name</key>
 			<string>micro</string>
 			<key>description</key>
-			<string>Set to 1 whether the app can access the microphone, 0 otherwise.</string>
+			<string>Set to 1 whether the app can record audio from the mic, 0 otherwise.</string>
 		</dict>
 		<dict>
 			<key>name</key>
