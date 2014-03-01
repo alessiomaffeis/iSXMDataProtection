@@ -1,7 +1,7 @@
 iSXMDataProtection
 ============
 
-iSXMDataProtection is a module that performs static analysis on the application’s executable binary in order to check if the application has the potential for accessing sensitive information and transmitting them over a network connection.
+iSXMDataProtection is an example module that performs static analysis on the application’s executable binary in order to check if the application has the potential for accessing sensitive information and transmitting them over a network connection.
 
 The module provides the following metrics:
 
